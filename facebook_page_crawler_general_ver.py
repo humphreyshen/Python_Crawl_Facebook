@@ -21,7 +21,7 @@ password = input('>> 請輸入您的密碼，輸入完成按下 enter 鍵：')
 
 while True:
     temp_input = input('\n>> 請輸入粉專貼文網址，不再輸入請按大寫 N 並按下 enter 鍵 (開頭是 \'https://www.facebook.com/...\')：')
-    if (temp_input != 'N') and ('https://www.facebook.com/' in temp_input):
+    if (temp_input != 'N'):
         page_list.append(temp_input)
     elif temp_input == 'N':
         break
@@ -75,8 +75,8 @@ for index in page_list:
     while True:
         ## 先判斷該頁最後一則貼文的日期是否有超過日期範圍，超過即輸出，未超過則往下捲動頁面
         for i in driver.find_elements_by_css_selector('div.userContentWrapper'):
-            last_date_time = i.find_element_by_css_selector('a._5pcq abbr').get_attribute('title')
-        last_date_time = dt.datetime.strptime(last_date_time.split()[0], '%Y/%m/%d').date()
+            last_date_time = i.find_element_by_class_name('.qku1pbnj j8otv06s r05nras9 a1itoznt te7ihjl9 svz86pwt a53abz89')
+        last_date_time = dt.datetime.strptime(last_date_time.split()[0], '%Y-%m-%d').date()
         if last_date_time < start_date:
             soup = BeautifulSoup(driver.page_source, 'lxml')
             for i in soup.find_all('div', '_5pcr userContentWrapper'):
